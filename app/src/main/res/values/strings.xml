@@ -1,0 +1,84 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Manuel Gundlach <manuel.gundlach@gmail.com>
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<resources>
+    <string name="app_name">Prass</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="tv">…</string>
+    <string name="title_activity_test">Prass</string>
+
+
+    <string name="title_section1">Statistics</string>
+    <string name="title_section2">Print File</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="signin">Sign In</string>
+    <string name="cancel">Cancel</string>
+    <string name="LoginTitle">Userdata</string>
+    <string name="LoginMessage">Enter username and password of your CIP-account.</string>
+    <string name="AcceptTitle">Vereinbarung</string>
+    <string name="AcceptMessage">Bitte lesen und akzeptieren Sie die folgenden wichtigen Informationen, den Haftungsauschluss und die Datenschutzerklärung.</string>
+    <string name="accept">Akzeptieren</string>
+    <string name="noaccept">Ablehnen</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="printquota">PrintQuota:</string>
+    <string name="printer">Printer</string>
+    <string name="jobs">#Jobs</string>
+    <string name="total_size">Total Size</string>
+    <string name="status">Status</string>
+    <string name="number_of_copies">Number of copies</string>
+    <string name="pages_to_print">Pages to print</string>
+    <string name="all">all</string>
+    <string name="file_to_print">File to print</string>
+    <string name="select">Select</string>
+    <string name="twosided">TwoSided</string>
+    <string name="pages_per_sheet">Pages per sheet</string>
+    <string name="print">Print</string>
+    <string name="refresh">Refresh</string>
+    <string name="action_impressum">Impressum, Datenschutzerklärung &amp; Lizenzen</string>
+    <string name="action_impressum_impressum">Kontakt:\n\n
+[No contact information]\n\n\nDisclaimer:\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\nDIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTELLT, EINSCHLIEẞLICH DER GARANTIE ZUR BENUTZUNG FÜR DEN VORGESEHENEN ODER EINEM BESTIMMTEN ZWECK SOWIE JEGLICHER RECHTSVERLETZUNG, JEDOCH NICHT DARAUF BESCHRÄNKT. IN KEINEM FALL SIND DIE AUTOREN ODER COPYRIGHTINHABER FÜR JEGLICHEN SCHADEN ODER SONSTIGE ANSPRÜCHE HAFTBAR ZU MACHEN, OB INFOLGE DER ERFÜLLUNG EINES VERTRAGES, EINES DELIKTES ODER ANDERS IM ZUSAMMENHANG MIT DER SOFTWARE ODER SONSTIGER VERWENDUNG DER SOFTWARE ENTSTANDEN.\n\nDie Verfügbarkeit der verwendeten Dienste oder eine Nutzbarkeit der Anwendung wird zu keinem Zeitpunkt garantiert. Insbesondere kann die Funktionstüchtigkeit der Anwendung nicht im Falle einer Überlastung oder der vorübergehenden oder dauerhaften Nichtverfügbarkeit der gebräuchlich gemachten Server des mathematischen Instituts sichergestellt werden.\n\nDer Anbieter dieser Anwendung ist nicht für eine eventuelle Unnutzbarkeit des Dienstes verantwortlich, die durch von dem Institut durchgeführte Änderungen oder andere unabsehbare Ereignisse entsteht, und ist nicht verpflichtet, Anstrengungen irgendeiner Art zu unternehmen, um diese abzustellen.\n\nEs wird keine Haftung für Schäden übernommen, die Ihnen in Folge einer unbeabsichtigten oder fehlerhaften Übertragung von Dateien an das mathematische Institut entstehen könnten. Ferner wird nicht für fehlerfreie, vollständige oder sichere Übertragung oder für das Erhalten des gewünschten Druckergebnisses garantiert. Reduzierungen Ihres Druckkontingents liegen ausschließlich in Ihrer Verantwortung. Sie sind dafür verantwortlich, die laufenden Druckaufträge zu überwachen und im Falle fehlerhaft oder in ungewünschter Weise ausgeführter Aufträge einzugreifen.\n\nBeachten Sie, dass ausschließlich Sie selbst für die Geheimhaltung Ihrer Zugangsdaten verantwortlich sind und diese Zugriff auf persönliche Daten (wie Passwörter, Suchverläufe oder andere in Ihrem CIP-Account gespeicherte Daten) ermöglichen. Es wird keine Haftung für Schäden übernommen, die Ihnen durch den unberechtigten Zugriff Dritter auf Ihren CIP-Account entstehen. Ihre Zugangsdaten werden unverschlüsselt auf Ihrem Gerät gespeichert und sind nicht sicher vor dem Zugriff durch Dritte. Die Eingabe der Zugangsdaten in die Anwendung erfolgt auf Ihr eigenes Risiko und unter Ausschluss einer Haftung durch den Anbieter der Anwendung.\n\nDie Anwendung und der die Anwendung Vertreibende sind in keiner rechtlichen oder sonstigen Weise mit der Ludwigs-Maximilians-Universität München, einer ihrer Fakultäten, einem ihrer Institute oder einer anderen angehörigen Institution verbunden.\n\n\nDatenschutzerklärung:\n\nZur Benutzung der Anwendung sind Benutzername und Passwort Ihres CIP-Accounts am mathematischen Institut erforderlich. Diese Daten werden von der Anwendung erfasst, gespeichert und verarbeitet und ausschließlich zum Aufbau einer verschlüsselten Verbindung zu Rechnern des mathematischen Instituts verwendet.\n\nBeachten Sie, dass ausschließlich Sie selbst für die Geheimhaltung Ihrer Zugangsdaten verantwortlich sind und diese Zugriff auf persönliche Daten (wie Passwörter, Suchverläufe oder andere in Ihrem CIP-Account gespeicherte Daten) ermöglichen. Es wird keine Haftung für Schäden übernommen, die Ihnen durch den unberechtigten Zugriff Dritter auf Ihren CIP-Account entstehen. Ihre Zugangsdaten werden unverschlüsselt auf Ihrem Gerät gespeichert und sind nicht sicher vor dem Zugriff durch Dritte. Die Eingabe der Zugangsdaten in die Anwendung erfolgt auf Ihr eigenes Risiko und unter Ausschluss einer Haftung durch den Anbieter der Anwendung.\n\nDie Anwendung hat zudem Zugriff auf den Telefonspeicher (intern und extern, SD-Karte). Dieser wird ausschließlich verwendet, um Ihre Einstellungen und Benutzerdaten zu speichern und von Ihnen zum Drucken ausgewählte Dateien an die Rechner des mathematischen Instituts zu senden. Die gesendeten Dateien werden nicht an Dritte weitergeleitet, können jedoch in Ihrem persönlichen CIP-Account einsehbar bleiben und sind mit der Übertragung auch Gegenstand Ihrer Datenschutzvereinbarungen mit dem mathematischen Institut.\n\n\nOpen-Source-Lizenz für JSch:\n\nCopyright (c) 2002-2015 Atsuhiko Yamanaka, JCraft,Inc.\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:\n\n1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.\n\n2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the distribution.\n\n3. The names of the authors may not be used to endorse or promote products
+     derived from this software without specific prior written permission.\n\nTHIS SOFTWARE IS PROVIDED ``AS IS\'\' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JCRAFT,
+INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    </string>
+    <string name="conditionsnow">Conditionsv1</string>
+    <string name="pdfpass_needed">PDF encrypted</string>
+    <string name="pwd">password</string>
+    <!--    <string name="printers_raw_default">d101|B115|cip90.math.lmu.de\nd101|B115|cip91.math.lmu.de\nd102|BU135|cip90.math.lmu.de\nd102|BU135|cip91.math.lmu.de\nd103|BU136|cip90.math.lmu.de\nd103|BU136|cip91.math.lmu.de</string>-->
+</resources>

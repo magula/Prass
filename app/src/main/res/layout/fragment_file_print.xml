@@ -1,0 +1,453 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2020 Manuel Gundlach <manuel.gundlach@gmail.com>
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.dowscr.manuel.prass.FilePrint">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/Printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/Printer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/Printer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/Printer3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:checked="false" />
+        </RadioGroup>
+
+
+        <RadioGroup
+            android:id="@+id/edge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/le"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="long edge" />
+
+            <RadioButton
+                android:id="@+id/se"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="short edge" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/pps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/pps1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="1"
+                tools:ignore="HardcodedText" />
+
+            <RadioButton
+                android:id="@+id/pps2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:checked="false"
+                android:text="2"
+                tools:ignore="HardcodedText" />
+
+            <RadioButton
+                android:id="@+id/pps4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="4"
+                tools:ignore="HardcodedText" />
+
+            <RadioButton
+                android:id="@+id/pps8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="8"
+                tools:ignore="HardcodedText" />
+
+            <RadioButton
+                android:id="@+id/pps16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="16"
+                tools:ignore="HardcodedText" />
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/selectfile"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/select" />
+
+            <TextView
+                android:id="@+id/file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/selectfile"
+                android:layout_toLeftOf="@+id/selectfile"
+                android:hint="@string/file_to_print"
+                android:lines="1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/DescPrinter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line01"
+                android:layout_toRightOf="@id/line01"
+                android:text="Printer"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/line01"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/DescPrinter"
+                android:background="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/ds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line03"
+                android:layout_toRightOf="@id/line03"
+                android:checked="true"
+                android:text="@string/twosided"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/secondary_text_default_material_light" />
+
+            <View
+                android:id="@+id/line03"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/ds"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/Descpps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line05"
+                android:layout_toRightOf="@id/line05"
+                android:text="@string/pages_per_sheet"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/line05"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/Descpps"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/Descnc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line07"
+                android:layout_toRightOf="@id/line07"
+                android:text="@string/number_of_copies"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/line07"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/Descnc"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+
+            <Button
+                android:id="@+id/ncdown"
+                style="@android:style/Widget.Material.Button.Borderless.Small"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:width="30dp"
+                android:text="-"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/ncup"
+                style="@android:style/Widget.Material.Button.Borderless.Small"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@+id/nc"
+                android:width="10dp"
+                android:text="+" />
+
+            <EditText
+
+                android:id="@+id/nc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ncdown"
+                android:width="50dp"
+                android:gravity="center_horizontal"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/printall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line09"
+                android:layout_toRightOf="@id/line09"
+                android:checked="false"
+                android:text="@string/pages_to_print"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/secondary_text_default_material_light" />
+
+            <View
+                android:id="@+id/line09"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/printall"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/np"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dp"
+                android:enabled="false"
+                android:gravity="center_horizontal"
+                android:hint="@string/all"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/pdfpass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line10"
+                android:layout_toRightOf="@id/line10"
+                android:checked="false"
+                android:text="@string/pdfpass_needed"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/secondary_text_default_material_light" />
+
+            <View
+                android:id="@+id/line10"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/pdfpass"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/pdfpwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp"
+                android:enabled="false"
+                android:gravity="center_horizontal"
+                android:hint="@string/pwd"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/dummy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" />
+
+
+    </LinearLayout>
+
+</ScrollView>
