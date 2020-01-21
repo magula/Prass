@@ -18,4 +18,4 @@ Once you've cloned this repository, the app can be compiled from Android Studio,
 
     ./gradlew assemble
 
-in the root of the repository from a command line, provided you have the necessary Android frameworks installed.
+in the root of the repository from a command line, provided you have the necessary Android frameworks installed (this can fail if you're using JDK 13; try running it with JDK 8).
