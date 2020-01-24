@@ -4,6 +4,8 @@ Prass is an Android app designed to print via an SSH connection.
 
 It was developed for using printers at the CIP pools at the math department of LMU Munich. However, it can easily be changed to work for any setup where you have SSH access to a server that can print via the Unix `lp` command.
 
+<img src="Screenshot_statistics.png" width=300/> <img src="Screenshot_print.png" width=300/>
+
 Some Details
 ------------
 When a file is sent for printing, it's copied (via `scp`) to the server, where the `lp` command is executed via `ssh` to create a print job. The copy of the file is deleted afterwards.
