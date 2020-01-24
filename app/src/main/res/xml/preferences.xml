@@ -24,23 +24,23 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
-    <CheckBoxPreference
+    <EditTextPreference
         android:background="#FFFFFF"
-        android:defaultValue="true"
-        android:key="Vibration"
-        android:summary="Vibrate on certain events (Printing completed, ...)"
-        android:title="Vibration" />
+        android:key="user"
+        android:summary="Username of your CIP account"
+        android:title="Username" />
     <EditTextPreference
         android:background="#FFFFFF"
         android:inputType="textPassword"
         android:key="pass"
         android:summary="Password of your CIP account"
         android:title="Password" />
-    <EditTextPreference
+    <CheckBoxPreference
         android:background="#FFFFFF"
-        android:key="user"
-        android:summary="Username of your CIP account"
-        android:title="Username" />
+        android:defaultValue="true"
+        android:key="Vibration"
+        android:summary="Vibrate on certain events (Printing completed, ...)"
+        android:title="Vibration" />
     <!--            TODO implement support of own printer setup.-->
     <!--        android:defaultValue="@string/printers_raw_default"-->
     <!--    <EditTextPreference-->
