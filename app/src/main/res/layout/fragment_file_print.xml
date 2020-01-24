@@ -39,6 +39,63 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/selectfile"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/select" />
+
+            <TextView
+                android:id="@+id/file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/selectfile"
+                android:layout_toLeftOf="@+id/selectfile"
+                android:hint="@string/file_to_print"
+                android:lines="1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/DescPrinter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line01"
+                android:layout_toRightOf="@id/line01"
+                android:text="Printer"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/line01"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/DescPrinter"
+                android:background="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+
         <RadioGroup
             android:id="@+id/Printer"
             android:layout_width="wrap_content"
@@ -68,6 +125,40 @@
                 android:checked="false" />
         </RadioGroup>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/ds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line03"
+                android:layout_toRightOf="@id/line03"
+                android:checked="true"
+                android:text="@string/twosided"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/secondary_text_default_material_light" />
+
+            <View
+                android:id="@+id/line03"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/ds"
+                android:background="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
 
         <RadioGroup
             android:id="@+id/edge"
@@ -91,6 +182,37 @@
                 android:text="short edge" />
 
         </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/Descpps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/line05"
+                android:layout_toRightOf="@id/line05"
+                android:text="@string/pages_per_sheet"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/line05"
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3px"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:layout_width="30px"
+                android:layout_height="2px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3px"
+                android:layout_toRightOf="@id/Descpps"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
 
         <RadioGroup
             android:id="@+id/pps"
@@ -141,127 +263,6 @@
                 tools:ignore="HardcodedText" />
 
         </RadioGroup>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/selectfile"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@string/select" />
-
-            <TextView
-                android:id="@+id/file"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/selectfile"
-                android:layout_toLeftOf="@+id/selectfile"
-                android:hint="@string/file_to_print"
-                android:lines="1"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/DescPrinter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/line01"
-                android:layout_toRightOf="@id/line01"
-                android:text="Printer"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <View
-                android:id="@+id/line01"
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3px"
-                android:background="@android:color/darker_gray" />
-
-            <View
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3px"
-                android:layout_toRightOf="@id/DescPrinter"
-                android:background="@android:color/darker_gray" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <CheckBox
-                android:id="@+id/ds"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/line03"
-                android:layout_toRightOf="@id/line03"
-                android:checked="true"
-                android:text="@string/twosided"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/secondary_text_default_material_light" />
-
-            <View
-                android:id="@+id/line03"
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3px"
-                android:background="@android:color/darker_gray" />
-
-            <View
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3px"
-                android:layout_toRightOf="@id/ds"
-                android:background="@android:color/darker_gray" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/Descpps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/line05"
-                android:layout_toRightOf="@id/line05"
-                android:text="@string/pages_per_sheet"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <View
-                android:id="@+id/line05"
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3px"
-                android:background="@android:color/darker_gray" />
-
-            <View
-                android:layout_width="30px"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3px"
-                android:layout_toRightOf="@id/Descpps"
-                android:background="@android:color/darker_gray" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
