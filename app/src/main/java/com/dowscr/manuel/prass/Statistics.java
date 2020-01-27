@@ -28,8 +28,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,11 +38,10 @@ import android.view.ViewGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import static java.lang.Math.max;
-
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdView;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,7 +85,7 @@ public class Statistics extends Fragment implements PrinterConstants {
 
         rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.swiperefresh);
 
         mSwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,19 +97,19 @@ public class Statistics extends Fragment implements PrinterConstants {
         );
 
 
-        final TextView[] Pr = {(TextView) rootView.findViewById(R.id.DescPrA), (TextView) rootView.findViewById(R.id.DescPrB), (TextView) rootView.findViewById(R.id.DescPrC)};
+        final TextView[] Pr = {rootView.findViewById(R.id.DescPrA), rootView.findViewById(R.id.DescPrB), rootView.findViewById(R.id.DescPrC)};
         for (int i = 0; i < Pr.length; i++)
             Pr[i].setText(PrinterNames[i]);
 
-        final TextView[] Jo = {(TextView) rootView.findViewById(R.id.JoA), (TextView) rootView.findViewById(R.id.JoB), (TextView) rootView.findViewById(R.id.JoC)};
+        final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
         for (TextView i : Jo)
             i.setText("?");
 
-        final TextView[] Si = {(TextView) rootView.findViewById(R.id.SiA), (TextView) rootView.findViewById(R.id.SiB), (TextView) rootView.findViewById(R.id.SiC)};
+        final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
         for (TextView i : Si)
             i.setText("?");
 
-        final TextView[] Re = {(TextView) rootView.findViewById(R.id.ReA), (TextView) rootView.findViewById(R.id.ReB), (TextView) rootView.findViewById(R.id.ReC)};
+        final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
         for (TextView i : Re)
             i.setText("?");
 
@@ -152,17 +150,17 @@ public class Statistics extends Fragment implements PrinterConstants {
 
     private void updateStatistics() {
 
-        final TextView TV = (TextView) rootView.findViewById(R.id.tv);
+        final TextView TV = rootView.findViewById(R.id.tv);
 
-        final TextView[] Jo = {(TextView) rootView.findViewById(R.id.JoA), (TextView) rootView.findViewById(R.id.JoB), (TextView) rootView.findViewById(R.id.JoC)};
+        final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
 
-        final TextView[] Si = {(TextView) rootView.findViewById(R.id.SiA), (TextView) rootView.findViewById(R.id.SiB), (TextView) rootView.findViewById(R.id.SiC)};
+        final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
 
-        final TextView[] Re = {(TextView) rootView.findViewById(R.id.ReA), (TextView) rootView.findViewById(R.id.ReB), (TextView) rootView.findViewById(R.id.ReC)};
+        final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
 
-        final TableRow[] Row = {(TableRow) rootView.findViewById(R.id.RowA), (TableRow) rootView.findViewById(R.id.RowB), (TableRow) rootView.findViewById(R.id.RowC)};
+        final TableRow[] Row = {rootView.findViewById(R.id.RowA), rootView.findViewById(R.id.RowB), rootView.findViewById(R.id.RowC)};
 
-        final TextView EB = (TextView) rootView.findViewById(R.id.errbox);
+        final TextView EB = rootView.findViewById(R.id.errbox);
 
         try {
             for (TableRow i : Row)
@@ -208,18 +206,25 @@ public class Statistics extends Fragment implements PrinterConstants {
         protected int[][] doInBackground(Void... s) {
             try {
                 int[][] S = new int[NumPrinters + 1][3];
-                String command = "printquota";
-                //To speed up usage of ssh, multiple commandos are concatenated
+                String commandquota = MainActivity.getCommandQuota();
+                String command = commandquota;
+                if (commandquota.length() == 0)
+                    command += "echo \"Dummy Quota\"";
+                //To speed up usage of ssh, multiple commands are concatenated
                 //and sent at once. Result will be separated by string "separator"
                 final String separator = "64251674245076664132";
                 for (int i = 0; i < NumPrinters; i++)
                     command += "&&echo -n \"" + separator + "\"&&" + "lpq -P " + PrinterIDS[i];
+                Log.i("cmd", command);
                 String Result = ConnectionHandler.executeRemoteCommand(command);
                 String[] listofqueues = Result.split(separator);
 
 //                Extract printquota from result
-                int printquota = Integer.parseInt((listofqueues[0].split("\\s+"))[6]);
-                S[NumPrinters][0] = printquota;
+                if (commandquota.length() != 0) {
+                    int printquota = Integer.parseInt((listofqueues[0].split("\\s+"))[6]);
+                    S[NumPrinters][0] = printquota;
+                } else
+                    S[NumPrinters][0] = -1;
 
 
 //                Extract stats on single printers from result
@@ -256,32 +261,35 @@ public class Statistics extends Fragment implements PrinterConstants {
         protected void onPostExecute(int[][] s) {
 
             if (Ex != null) {
-                final TextView EB = (TextView) rootView.findViewById(R.id.errbox);
+                final TextView EB = rootView.findViewById(R.id.errbox);
                 EB.setText(Ex);
                 EB.setVisibility(View.VISIBLE);
             }
 
-            final TextView TV = (TextView) rootView.findViewById(R.id.tv);
+            final TextView TV = rootView.findViewById(R.id.tv);
             if (s == null || s[NumPrinters] == null)
                 TV.setText("ERR");
             else {
                 int printquota = s[NumPrinters][0];
-                TV.setText(String.valueOf(printquota));
+                if (printquota != -1)
+                    TV.setText(String.valueOf(printquota));
+                else
+                    TV.setText("[unavailable]");
             }
 
-            final TextView[] Jo = {(TextView) rootView.findViewById(R.id.JoA), (TextView) rootView.findViewById(R.id.JoB), (TextView) rootView.findViewById(R.id.JoC)};
+            final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
             for (TextView i : Jo)
                 i.setText("?");
 
-            final TextView[] Si = {(TextView) rootView.findViewById(R.id.SiA), (TextView) rootView.findViewById(R.id.SiB), (TextView) rootView.findViewById(R.id.SiC)};
+            final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
             for (TextView i : Si)
                 i.setText("?");
 
-            final TextView[] Re = {(TextView) rootView.findViewById(R.id.ReA), (TextView) rootView.findViewById(R.id.ReB), (TextView) rootView.findViewById(R.id.ReC)};
+            final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
             for (TextView i : Re)
                 i.setText("?");
 
-            final TableRow[] Row = {(TableRow) rootView.findViewById(R.id.RowA), (TableRow) rootView.findViewById(R.id.RowB), (TableRow) rootView.findViewById(R.id.RowC)};
+            final TableRow[] Row = {rootView.findViewById(R.id.RowA), rootView.findViewById(R.id.RowB), rootView.findViewById(R.id.RowC)};
 
             for (int i = 0; i < NumPrinters; i++)
                 if (s != null && s[i] != null) {

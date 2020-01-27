@@ -37,10 +37,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,6 +58,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 
 /**
@@ -131,7 +132,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
     }
 
     private void handleData(Uri U) {
-        final TextView file = (TextView) rootView.findViewById(R.id.file);
+        final TextView file = rootView.findViewById(R.id.file);
 
         ContentResolver resolver = getActivity().getContentResolver();
 
@@ -190,23 +191,23 @@ public class FilePrint extends Fragment implements PrinterConstants {
         }
 
         final View dummy = rootView.findViewById(R.id.dummy);
-        final CheckBox printall = (CheckBox) rootView.findViewById(R.id.printall);
-        final CheckBox pdfpass_needed = (CheckBox) rootView.findViewById(R.id.pdfpass);
-        final CheckBox ds = (CheckBox) rootView.findViewById(R.id.ds);
-        final EditText np = (EditText) rootView.findViewById(R.id.np);
-        final RadioGroup pps = (RadioGroup) rootView.findViewById(R.id.pps);
-        final RadioGroup edge = (RadioGroup) rootView.findViewById(R.id.edge);
-        final RadioGroup pr = (RadioGroup) rootView.findViewById(R.id.Printer);
-        final RadioButton le = (RadioButton) rootView.findViewById(R.id.le);
-        final RadioButton se = (RadioButton) rootView.findViewById(R.id.se);
-        final Button sf = (Button) rootView.findViewById(R.id.selectfile);
-        final RadioButton pr1 = (RadioButton) rootView.findViewById(R.id.Printer1);
-        final RadioButton pr2 = (RadioButton) rootView.findViewById(R.id.Printer2);
-        final RadioButton pr3 = (RadioButton) rootView.findViewById(R.id.Printer3);
-        final EditText nc = (EditText) rootView.findViewById(R.id.nc);
-        final EditText pdfpwd = (EditText) rootView.findViewById(R.id.pdfpwd);
-        final Button ncdown = (Button) rootView.findViewById(R.id.ncdown);
-        final Button ncup = (Button) rootView.findViewById(R.id.ncup);
+        final CheckBox printall = rootView.findViewById(R.id.printall);
+        final CheckBox pdfpass_needed = rootView.findViewById(R.id.pdfpass);
+        final CheckBox ds = rootView.findViewById(R.id.ds);
+        final EditText np = rootView.findViewById(R.id.np);
+        final RadioGroup pps = rootView.findViewById(R.id.pps);
+        final RadioGroup edge = rootView.findViewById(R.id.edge);
+        final RadioGroup pr = rootView.findViewById(R.id.Printer);
+        final RadioButton le = rootView.findViewById(R.id.le);
+        final RadioButton se = rootView.findViewById(R.id.se);
+        final Button sf = rootView.findViewById(R.id.selectfile);
+        final RadioButton pr1 = rootView.findViewById(R.id.Printer1);
+        final RadioButton pr2 = rootView.findViewById(R.id.Printer2);
+        final RadioButton pr3 = rootView.findViewById(R.id.Printer3);
+        final EditText nc = rootView.findViewById(R.id.nc);
+        final EditText pdfpwd = rootView.findViewById(R.id.pdfpwd);
+        final Button ncdown = rootView.findViewById(R.id.ncdown);
+        final Button ncup = rootView.findViewById(R.id.ncup);
 
         pr1.setText(Html.fromHtml(PrinterNames[0] + "<br><small>" + PrinterIDS[0] + "</small>"));
         pr2.setText(Html.fromHtml(PrinterNames[1] + "<br><small>" + PrinterIDS[1] + "</small>"));
@@ -387,9 +388,9 @@ public class FilePrint extends Fragment implements PrinterConstants {
         int id = item.getItemId();
 
         if (id == R.id.print) {
-            final EditText np = (EditText) rootView.findViewById(R.id.np);
-            final EditText nc = (EditText) rootView.findViewById(R.id.nc);
-            final EditText pdfpwd = (EditText) rootView.findViewById(R.id.pdfpwd);
+            final EditText np = rootView.findViewById(R.id.np);
+            final EditText nc = rootView.findViewById(R.id.nc);
+            final EditText pdfpwd = rootView.findViewById(R.id.pdfpwd);
             if (FileStream == null) {
                 Toast.makeText(getActivity().getApplicationContext(), "Filename missing", Toast.LENGTH_SHORT).show();
                 return true;

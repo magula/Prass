@@ -25,18 +25,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
     <EditTextPreference
-        android:background="#FFFFFF"
         android:key="user"
         android:summary="Username of your CIP account"
         android:title="Username" />
     <EditTextPreference
-        android:background="#FFFFFF"
-        android:inputType="textPassword"
         android:key="pass"
         android:summary="Password of your CIP account"
         android:title="Password" />
+    <EditTextPreference
+        android:defaultValue="printquota"
+        android:key="commandquota"
+        android:summary="A bash command that prints your print quota. Leave blank if none or unknown. Default: printquota"
+        android:title="Printquota Command" />
     <CheckBoxPreference
-        android:background="#FFFFFF"
         android:defaultValue="true"
         android:key="Vibration"
         android:summary="Vibrate on certain events (Printing completed, ...)"

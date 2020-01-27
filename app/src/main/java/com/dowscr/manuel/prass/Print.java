@@ -31,13 +31,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Random;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 class Print extends AsyncTask<String, Void, Void> implements PrinterConstants {
     private final Random Rand = new Random();

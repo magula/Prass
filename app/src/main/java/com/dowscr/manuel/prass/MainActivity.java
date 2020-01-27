@@ -24,34 +24,38 @@
 
 package com.dowscr.manuel.prass;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.Locale;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-public class MainActivity extends ActionBarActivity implements LoginDialogFragment.LoginDialogListener, AcceptConditionsDialogFragment.AcceptConditionsDialogListener {
+
+public class MainActivity extends AppCompatActivity implements LoginDialogFragment.LoginDialogListener, AcceptConditionsDialogFragment.AcceptConditionsDialogListener {
 
     private static boolean Vibrate;
+    private static String CommandQuota;
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     /**
@@ -63,10 +67,19 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
     public static boolean getVibrate() {
         return Vibrate;
     }
-
     private static void setVibrate(boolean vibes) {
         Vibrate = vibes;
     }
+
+    public static String getCommandQuota() {
+        return CommandQuota;
+    }
+
+    private static void setCommandQuota(String c) {
+        CommandQuota = c;
+    }
+
+    private SharedPreferences preferencemanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +87,7 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        final androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -83,7 +96,7 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
         assert mViewPager != null;
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -128,6 +141,8 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
 //            }
         }
 
+        preferencemanager = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
         preferencelistener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -135,36 +150,37 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
             }
         };
 
-        getPreferences(Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(preferencelistener);
+        preferencemanager.registerOnSharedPreferenceChangeListener(preferencelistener);
 
-        if (!getPreferences(Context.MODE_PRIVATE).contains(getString(R.string.conditionsnow)))
+        if (!preferencemanager.contains(getString(R.string.conditionsnow)))
             (new AcceptConditionsDialogFragment()).show(getSupportFragmentManager(), "AcceptConditionsDialogFragment");
         else
             checkforCreds();
     }
 
     private void checkforCreds() {
-        if (!getPreferences(Context.MODE_PRIVATE).contains("user"))
+        if (!preferencemanager.contains("user"))
             (new LoginDialogFragment()).show(getSupportFragmentManager(), "LoginDialogFragment");
         else
             updateCreds();
     }
 
     private void updateCreds() {
-        SharedPreferences p = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences p = preferencemanager;
         ConnectionHandler.setCreds(p.getString("user", "user"),
                 p.getString("pass", "pass"));
         setVibrate(p.getBoolean("Vibration", true));
+        setCommandQuota(p.getString("commandquota", "printquotar"));
         new assureConnection().execute();
     }
 
     @Override
     public void onDialogPositiveClick(LoginDialogFragment dialog) {
-        SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor e = preferencemanager.edit();
         e.putString("user", dialog.u);
         e.putString("pass", dialog.p);
         e.putBoolean("Vibration", true);
-        e.commit();
+        e.apply();
         checkforCreds();
     }
 
@@ -175,9 +191,9 @@ public class MainActivity extends ActionBarActivity implements LoginDialogFragme
 
     @Override
     public void onDialogPositiveClick(AcceptConditionsDialogFragment dialog) {
-        SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor e = preferencemanager.edit();
         e.putBoolean(getString(R.string.conditionsnow), true);
-        e.commit();
+        e.apply();
         checkforCreds();
     }
 

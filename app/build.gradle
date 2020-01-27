@@ -25,12 +25,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29"
     defaultConfig {
         applicationId "com.dowscr.manuel.dowscr2"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 29
         versionCode 5
         versionName "1.04"
     }
@@ -42,7 +42,7 @@ android {
     }
     productFlavors {
     }
-    lintOptions{
+    lintOptions {
         checkReleaseBuilds false
     }
 }
@@ -50,6 +50,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':jsch-0.1.52_2')
-    api 'com.android.support:appcompat-v7:25.4.0'
-    api 'com.android.support:support-v4:25.4.0'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.preference:preference:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
 }

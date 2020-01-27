@@ -25,17 +25,28 @@
 package com.dowscr.manuel.prass;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.Objects;
 
-public class SettingsActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
+
+public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        getSupportFragmentManager().
-                beginTransaction().
-                replace(R.id.settings_fragment, new SettingsFragment()).
-                commit();
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences, rootKey);
+
+        EditTextPreference passPreference = findPreference("pass");
+        Objects.requireNonNull(passPreference).setOnBindEditTextListener(
+                new EditTextPreference.OnBindEditTextListener() {
+                    @Override
+                    public void onBindEditText(@NonNull EditText editText) {
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+                }
+        );
     }
 }
