@@ -41,11 +41,13 @@ import java.util.Random;
  */
 class ConnectionHandler {
     private static String username, password;
+    private static String[] hosts;
     static private Session session;
 
-    static void setCreds(String user, String pass) {
+    static void setCreds(String user, String pass, String[] h) {
         username = user;
         password = pass;
+        hosts = h;
     }
 
     private synchronized static void TryConnect(String hostname) throws Exception {
@@ -62,18 +64,9 @@ class ConnectionHandler {
     }
 
     private synchronized static void Establish() throws Exception {
-        if ((new Random()).nextBoolean())
-            try {
-                TryConnect("cip91.math.lmu.de");
-            } catch (Exception e) {
-                TryConnect("cip90.math.lmu.de");
-            }
-        else
-            try {
-                TryConnect("cip90.math.lmu.de");
-            } catch (Exception e) {
-                TryConnect("cip91.math.lmu.de");
-            }
+        // A host is chosen at random from the host list
+        int host_index = (new Random()).nextInt(hosts.length);
+        TryConnect(hosts[host_index]);
     }
 
     private static boolean isConnected() {

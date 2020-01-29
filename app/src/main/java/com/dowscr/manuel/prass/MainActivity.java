@@ -30,7 +30,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.appcompat.app.ActionBar;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
 
     private static boolean Vibrate;
     private static String CommandQuota;
+    public static ArrayList<String> PrinterIds, PrinterNames;
+    public static int NumPrinters;
     /**
      * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
      */
     private ViewPager mViewPager;
     private SharedPreferences.OnSharedPreferenceChangeListener preferencelistener;
+    private Statistics statisticsFragment;
+    private FilePrint fileprintFragment;
 
     public static boolean getVibrate() {
         return Vibrate;
@@ -74,9 +80,24 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
     public static String getCommandQuota() {
         return CommandQuota;
     }
-
     private static void setCommandQuota(String c) {
         CommandQuota = c;
+    }
+
+    private static void setPrinters(String c) {
+        PrinterIds = new ArrayList<>();
+        PrinterNames = new ArrayList<>();
+        String[] p = c.split("\\n+");
+        for (String q : p) {
+            String[] r = q.split("\\s+");
+            if (r.length == 2) {
+                PrinterIds.add(r[0]);
+                PrinterNames.add(r[1]);
+            } else {
+//                TODO Provide an error message
+            }
+        }
+        NumPrinters = PrinterIds.size();
     }
 
     private SharedPreferences preferencemanager;
@@ -141,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
 //            }
         }
 
-        preferencemanager = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        preferencemanager = PreferenceManager.getDefaultSharedPreferences(this);
 
         preferencelistener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -167,10 +188,18 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
 
     private void updateCreds() {
         SharedPreferences p = preferencemanager;
-        ConnectionHandler.setCreds(p.getString("user", "user"),
-                p.getString("pass", "pass"));
+        ConnectionHandler.setCreds(
+                p.getString("user", "user"),
+                p.getString("pass", "pass"),
+                p.getString("hosts", "host_list_unavailable").split("\\s+")
+        );
         setVibrate(p.getBoolean("Vibration", true));
         setCommandQuota(p.getString("commandquota", "printquotar"));
+        setPrinters(p.getString("printers", "printers_unavailable"));
+        if (statisticsFragment != null)
+            statisticsFragment.updatePrinters();
+        if (fileprintFragment != null)
+            fileprintFragment.updatePrinters();
         new assureConnection().execute();
     }
 
@@ -256,9 +285,18 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
         @Override
         public Fragment getItem(int position) {
             if (position == 0)
-                return Statistics.newInstance();
+                return statisticsFragment = Statistics.newInstance();
             else
-                return FilePrint.newInstance();
+                return fileprintFragment = FilePrint.newInstance();
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            if (position == 0)
+                return statisticsFragment = (Statistics) createdFragment;
+            else
+                return fileprintFragment = (FilePrint) createdFragment;
         }
 
         @Override

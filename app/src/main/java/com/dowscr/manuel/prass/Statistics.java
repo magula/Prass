@@ -25,8 +25,10 @@
 package com.dowscr.manuel.prass;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,12 +37,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import static com.dowscr.manuel.prass.MainActivity.NumPrinters;
+import static com.dowscr.manuel.prass.MainActivity.PrinterIds;
+import static com.dowscr.manuel.prass.MainActivity.PrinterNames;
 import static java.lang.Math.max;
 
 /**
@@ -48,12 +56,14 @@ import static java.lang.Math.max;
  * Use the {@link Statistics#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Statistics extends Fragment implements PrinterConstants {
+public class Statistics extends Fragment {
 
     //    private OnFragmentInteractionListener mListener;
     private View rootView;
     private LayoutInflater stinflater;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private ArrayList<PrinterRow> Rows = new ArrayList<>();
 
     public Statistics() {
         // Required empty public constructor
@@ -78,6 +88,65 @@ public class Statistics extends Fragment implements PrinterConstants {
         setHasOptionsMenu(true);
     }
 
+    //    A table row, containing TextViews for a printer's name,
+//    its number of running jobs, the size of the running jobs,
+//    and its status.
+    private class PrinterRow {
+        TableRow row;
+        TextView PrinterDescription,
+                PrinterNumberofJobs,
+                PrinterSizeofJobs,
+                PrinterStatus;
+
+        PrinterRow(Context context, String PrinterName) {
+            row = new TableRow(context);
+
+            PrinterDescription = new TextView(context);
+            PrinterNumberofJobs = new TextView(context);
+            PrinterSizeofJobs = new TextView(context);
+            PrinterStatus = new TextView(context);
+
+            TextView[] Cells = {PrinterDescription, PrinterNumberofJobs, PrinterSizeofJobs, PrinterStatus};
+            for (int i = 0; i < Cells.length; i++) {
+                Cells[i].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                Cells[i].setLayoutParams(new TableRow.LayoutParams(i));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    Cells[i].setTextAppearance(R.style.TextAppearance_AppCompat_Medium);
+                else
+                    Cells[i].setTextAppearance(context, R.style.TextAppearance_AppCompat_Medium);
+                row.addView(Cells[i]);
+            }
+
+            PrinterDescription.setText(PrinterName);
+            reset();
+        }
+
+        void setInfo(String info) {
+            row.setBackgroundColor(Color.TRANSPARENT);
+            PrinterNumberofJobs.setText(info);
+            PrinterSizeofJobs.setText(info);
+            PrinterStatus.setText(info);
+        }
+
+        void reset() {
+            setInfo("?");
+        }
+
+        void err() {
+            setInfo("!");
+        }
+
+        void think() {
+            setInfo(".");
+        }
+
+        void setData(String Jo, String Si, String Re) {
+            PrinterNumberofJobs.setText(Jo);
+            PrinterSizeofJobs.setText(Si);
+            PrinterStatus.setText(Re);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,6 +155,8 @@ public class Statistics extends Fragment implements PrinterConstants {
         rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
 
         mSwipeRefreshLayout = rootView.findViewById(R.id.swiperefresh);
+
+        updatePrinters();
 
         mSwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -96,29 +167,23 @@ public class Statistics extends Fragment implements PrinterConstants {
                 }
         );
 
-
-        final TextView[] Pr = {rootView.findViewById(R.id.DescPrA), rootView.findViewById(R.id.DescPrB), rootView.findViewById(R.id.DescPrC)};
-        for (int i = 0; i < Pr.length; i++)
-            Pr[i].setText(PrinterNames[i]);
-
-        final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
-        for (TextView i : Jo)
-            i.setText("?");
-
-        final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
-        for (TextView i : Si)
-            i.setText("?");
-
-        final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
-        for (TextView i : Re)
-            i.setText("?");
-
         updateStatistics();
-
 
         stinflater = inflater;
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    public void updatePrinters() {
+        TableLayout table = rootView.findViewById(R.id.workloads);
+        for (PrinterRow r : Rows)
+            table.removeView(r.row);
+        Rows.clear();
+        for (String Name : PrinterNames) {
+            PrinterRow row = new PrinterRow(this.getContext(), Name);
+            table.addView(row.row);
+            Rows.add(row);
+        }
     }
 
     @SuppressWarnings("EmptyMethod")
@@ -149,29 +214,16 @@ public class Statistics extends Fragment implements PrinterConstants {
     }
 
     private void updateStatistics() {
+        //TODO Don't call this every time, just when necessary.
+        updatePrinters();
 
         final TextView TV = rootView.findViewById(R.id.tv);
-
-        final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
-
-        final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
-
-        final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
-
-        final TableRow[] Row = {rootView.findViewById(R.id.RowA), rootView.findViewById(R.id.RowB), rootView.findViewById(R.id.RowC)};
-
         final TextView EB = rootView.findViewById(R.id.errbox);
 
         try {
-            for (TableRow i : Row)
-                i.setBackgroundColor(Color.TRANSPARENT);
+            for (PrinterRow i : Rows)
+                i.think();
             TV.setText("...");
-            for (TextView i : Jo)
-                i.setText(".");
-            for (TextView i : Si)
-                i.setText(".");
-            for (TextView i : Re)
-                i.setText(".");
             EB.setVisibility(View.GONE);
             (new DownloadWorkloads()).execute();
         } catch (Exception e) {
@@ -214,8 +266,8 @@ public class Statistics extends Fragment implements PrinterConstants {
                 //and sent at once. Result will be separated by string "separator"
                 final String separator = "64251674245076664132";
                 for (int i = 0; i < NumPrinters; i++)
-                    command += "&&echo -n \"" + separator + "\"&&" + "lpq -P " + PrinterIDS[i];
-                Log.i("cmd", command);
+                    command += "&&echo -n \"" + separator + "\"&&" + "lpq -P " + PrinterIds.get(i);
+                Log.i("Workload command", command);
                 String Result = ConnectionHandler.executeRemoteCommand(command);
                 String[] listofqueues = Result.split(separator);
 
@@ -229,25 +281,29 @@ public class Statistics extends Fragment implements PrinterConstants {
 
 //                Extract stats on single printers from result
                 for (int pr = 0; pr < NumPrinters; pr++) {
-                    String[] t = listofqueues[pr + 1].split("\\n+");
-                    String[] PrinterInfo = t[0].split("\\s+");
-                    String HeadLine = t[1];
-                    int[] R = new int[3];
-                    R[2] = (PrinterInfo.length >= 5 && PrinterInfo[4].equals("printing")) ? 2 : ((PrinterInfo.length >= 3 && PrinterInfo[2].equals("ready")) ? 1 : 0);
-                    if (HeadLine.equals("no entries"))
-                        //noinspection ConstantConditions
-                        R[0] = R[1] = 0;
-                    else {
-                        int off = 2;
-                        //noinspection ConstantConditions
-                        R[0] = R[1] = 0;
-                        for (int i = off; i < t.length; i++) {
-                            R[0]++;
-                            String[] tt = t[i].split("\\s+");
-                            R[1] += Integer.valueOf(tt[tt.length - 2]);
+                    try {
+                        String[] t = listofqueues[pr + 1].split("\\n+");
+                        String[] PrinterInfo = t[0].split("\\s+");
+                        String HeadLine = t[1];
+                        int[] R = new int[3];
+                        R[2] = (PrinterInfo.length >= 5 && PrinterInfo[4].equals("printing")) ? 2 : ((PrinterInfo.length >= 3 && PrinterInfo[2].equals("ready")) ? 1 : 0);
+                        if (HeadLine.equals("no entries"))
+                            //noinspection ConstantConditions
+                            R[0] = R[1] = 0;
+                        else {
+                            int off = 2;
+                            //noinspection ConstantConditions
+                            R[0] = R[1] = 0;
+                            for (int i = off; i < t.length; i++) {
+                                R[0]++;
+                                String[] tt = t[i].split("\\s+");
+                                R[1] += Integer.valueOf(tt[tt.length - 2]);
+                            }
                         }
+                        S[pr] = R;
+                    } catch (Exception e) {
+                        S[pr] = null;
                     }
-                    S[pr] = R;
                 }
 
                 return S;
@@ -277,35 +333,24 @@ public class Statistics extends Fragment implements PrinterConstants {
                     TV.setText("[unavailable]");
             }
 
-            final TextView[] Jo = {rootView.findViewById(R.id.JoA), rootView.findViewById(R.id.JoB), rootView.findViewById(R.id.JoC)};
-            for (TextView i : Jo)
-                i.setText("?");
-
-            final TextView[] Si = {rootView.findViewById(R.id.SiA), rootView.findViewById(R.id.SiB), rootView.findViewById(R.id.SiC)};
-            for (TextView i : Si)
-                i.setText("?");
-
-            final TextView[] Re = {rootView.findViewById(R.id.ReA), rootView.findViewById(R.id.ReB), rootView.findViewById(R.id.ReC)};
-            for (TextView i : Re)
-                i.setText("?");
-
-            final TableRow[] Row = {rootView.findViewById(R.id.RowA), rootView.findViewById(R.id.RowB), rootView.findViewById(R.id.RowC)};
+            for (PrinterRow i : Rows)
+                i.reset();
 
             for (int i = 0; i < NumPrinters; i++)
                 if (s != null && s[i] != null) {
-                    Jo[i].setText(String.valueOf(s[i][0]));
-                    Si[i].setText(s[i][1] / 1024 + " KB");
+                    String Jo = String.valueOf(s[i][0]),
+                            Si = s[i][1] / 1024 + " KB",
+                            Re;
                     if (s[i][2] == 1)
-                        Re[i].setText("ready");
+                        Re = "ready";
                     else if (s[i][2] == 2)
-                        Re[i].setText("printing");
+                        Re = "printing";
                     else
-                        Re[i].setText("unknown");
-                    Row[i].setBackgroundColor(badnessColor(s[i][0], s[i][1]));
+                        Re = "unknown";
+                    Rows.get(i).setData(Jo, Si, Re);
+                    Rows.get(i).row.setBackgroundColor(badnessColor(s[i][0], s[i][1]));
                 } else {
-                    Jo[i].setText("!");
-                    Si[i].setText("!");
-                    Re[i].setText("!");
+                    Rows.get(i).err();
                 }
             resetUpdating();
         }

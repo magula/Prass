@@ -103,26 +103,8 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/Printer1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:checked="true" />
+            <!--            RadioButtons are added programmatically.-->
 
-            <RadioButton
-                android:id="@+id/Printer2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:checked="false" />
-
-            <RadioButton
-                android:id="@+id/Printer3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:checked="false" />
         </RadioGroup>
 
         <RelativeLayout

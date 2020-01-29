@@ -40,7 +40,10 @@ import java.util.Random;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
-class Print extends AsyncTask<String, Void, Void> implements PrinterConstants {
+import static com.dowscr.manuel.prass.MainActivity.PrinterIds;
+import static com.dowscr.manuel.prass.MainActivity.PrinterNames;
+
+class Print extends AsyncTask<String, Void, Void> {
     private final Random Rand = new Random();
     private final String TS;
     private final InputStream FileStream;
@@ -178,14 +181,14 @@ class Print extends AsyncTask<String, Void, Void> implements PrinterConstants {
             if (JobResult[0].equals("request") && JobResult[1].equals("id") && JobResult[2].equals("is"))
                 JobID = JobResult[3].split("-")[1];
             else {
-                NotificatePrinting("Printing " + FileName + " failed", "Printer " + PrinterNames[PrinterID] + " rejected job.", false, 0, NotificationID);
+                NotificatePrinting("Printing " + FileName + " failed", "Printer " + PrinterNames.get(PrinterID) + " rejected job.", false, 0, NotificationID);
                 vibrate();
                 deleteRemoteFile(TS + FileName);
                 return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            NotificatePrinting("Printing " + FileName + " failed", "Error when sending print commando on " + PrinterNames[PrinterID] + ".", false, 0, NotificationID);
+            NotificatePrinting("Printing " + FileName + " failed", "Error when sending print commando on " + PrinterNames.get(PrinterID) + ".", false, 0, NotificationID);
             vibrate();
             deleteRemoteFile(TS + FileName);
             return null;
@@ -196,7 +199,7 @@ class Print extends AsyncTask<String, Void, Void> implements PrinterConstants {
         while (true) {
             try {
                 if (isCancelled()) return null;
-                String pos = JobInQueue(PrinterIDS[PrinterID], JobID);
+                String pos = JobInQueue(PrinterIds.get(PrinterID), JobID);
                 if (pos == null)
                     break;
                 if (!pos.equals(lastpos))
@@ -210,7 +213,7 @@ class Print extends AsyncTask<String, Void, Void> implements PrinterConstants {
             }
         }
         if (isCancelled()) return null;
-        NotificatePrinting("Printed " + FileName, "Done. Collect at room" + PrinterNames[PrinterID] + ".", false, 0, NotificationID);
+        NotificatePrinting("Printed " + FileName, "Done. Collect at room" + PrinterNames.get(PrinterID) + ".", false, 0, NotificationID);
         vibrate();
         deleteRemoteFile(TS + FileName);
         return null;

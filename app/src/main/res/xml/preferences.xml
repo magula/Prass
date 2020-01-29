@@ -33,22 +33,23 @@
         android:summary="Password of your CIP account"
         android:title="Password" />
     <EditTextPreference
+        android:defaultValue="cip90.math.lmu.de cip91.math.lmu.de"
+        android:key="hosts"
+        android:summary="The host to connect to, in the format 'example.com'. You can provide several hosts separated by blanks. One of them will be chosen at random for every connection attempt."
+        android:title="Hosts" />
+    <EditTextPreference
         android:defaultValue="printquota"
         android:key="commandquota"
         android:summary="A bash command that prints your print quota. Leave blank if none or unknown. Default: printquota"
         android:title="Printquota Command" />
+    <EditTextPreference
+        android:defaultValue="d101 B115\nd102 BU135\nd103 BU136"
+        android:key="printers"
+        android:summary="A list of the printers available, one per line. Each line has to contain two strings, the printer's destination (as you would provide it to lpq, something like HP_M123_Printer), and a human-readable name, separated by a blank."
+        android:title="Printers" />
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="Vibration"
         android:summary="Vibrate on certain events (Printing completed, ...)"
         android:title="Vibration" />
-    <!--            TODO implement support of own printer setup.-->
-    <!--        android:defaultValue="@string/printers_raw_default"-->
-    <!--    <EditTextPreference-->
-    <!--        android:title="Printers"-->
-    <!--        android:key="printers_raw"-->
-    <!--        android:defaultValue="FUNCTIONALITY FROM THE FUTURE, NOW DEFUNCT"-->
-    <!--        android:summary="Printer-ID | Name of Printer | Server"-->
-    <!--        android:background="#FFFFFF">-->
-    <!--    </EditTextPreference>-->
 </PreferenceScreen>

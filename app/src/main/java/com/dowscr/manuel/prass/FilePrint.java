@@ -64,13 +64,17 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import static com.dowscr.manuel.prass.MainActivity.NumPrinters;
+import static com.dowscr.manuel.prass.MainActivity.PrinterIds;
+import static com.dowscr.manuel.prass.MainActivity.PrinterNames;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FilePrint#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FilePrint extends Fragment implements PrinterConstants {
+public class FilePrint extends Fragment {
     private static final AsyncTask[] PrintClasses = new AsyncTask[100];
     private static InputStream FileStream;
     private static int NumPrintJobs = 0;
@@ -106,7 +110,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
     private void selectFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("application/pdf");
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null)
+        if (intent.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager()) != null)
             startActivityForResult(intent, 42);
         else
             Toast.makeText(getActivity().getApplicationContext(), "File manager missing", Toast.LENGTH_SHORT).show();
@@ -114,7 +118,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 42 && resultCode == FragmentActivity.RESULT_OK) {
-            handleData(data.getData());
+            handleData(Objects.requireNonNull(data.getData()));
         }
     }
 
@@ -186,7 +190,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
 
         if (Intent.ACTION_SEND.equals(action) /*&& type != null*/) {
 //            if (scheme.equals("file")||scheme.equals("content")) {
-            handleData((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
+            handleData((Uri) Objects.requireNonNull(intent.getParcelableExtra(Intent.EXTRA_STREAM)));
 //            }
         }
 
@@ -201,17 +205,12 @@ public class FilePrint extends Fragment implements PrinterConstants {
         final RadioButton le = rootView.findViewById(R.id.le);
         final RadioButton se = rootView.findViewById(R.id.se);
         final Button sf = rootView.findViewById(R.id.selectfile);
-        final RadioButton pr1 = rootView.findViewById(R.id.Printer1);
-        final RadioButton pr2 = rootView.findViewById(R.id.Printer2);
-        final RadioButton pr3 = rootView.findViewById(R.id.Printer3);
         final EditText nc = rootView.findViewById(R.id.nc);
         final EditText pdfpwd = rootView.findViewById(R.id.pdfpwd);
         final Button ncdown = rootView.findViewById(R.id.ncdown);
         final Button ncup = rootView.findViewById(R.id.ncup);
 
-        pr1.setText(Html.fromHtml(PrinterNames[0] + "<br><small>" + PrinterIDS[0] + "</small>"));
-        pr2.setText(Html.fromHtml(PrinterNames[1] + "<br><small>" + PrinterIDS[1] + "</small>"));
-        pr3.setText(Html.fromHtml(PrinterNames[2] + "<br><small>" + PrinterIDS[2] + "</small>"));
+        updatePrinters();
 
         sf.setOnClickListener(
                 new View.OnClickListener() {
@@ -336,23 +335,28 @@ public class FilePrint extends Fragment implements PrinterConstants {
         pr.setOnCheckedChangeListener(new
                                               RadioGroup.OnCheckedChangeListener() {
                                                   public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                                      switch (checkedId) {
-                                                          case R.id.Printer1:
-                                                              PrinterID = 0;
-                                                              break;
-                                                          case R.id.Printer2:
-                                                              PrinterID = 1;
-                                                              break;
-                                                          case R.id.Printer3:
-                                                              PrinterID = 2;
-                                                              break;
-                                                      }
+                                                      PrinterID = checkedId - 2424;
                                                   }
                                               }
         );
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    public void updatePrinters() {
+        final RadioGroup pr = rootView.findViewById(R.id.Printer);
+        pr.removeAllViews();
+        for (int i = 0; i < NumPrinters; i++) {
+            final RadioButton button = new RadioButton(getContext());
+            ViewGroup.MarginLayoutParams layout = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(5, 5, 5, 5);
+            button.setLayoutParams(layout);
+            button.setChecked(i == 0);
+            button.setId(2424 + i);
+            pr.addView(button);
+            button.setText(Html.fromHtml(PrinterNames.get(i) + "<br><small>" + PrinterIds.get(i) + "</small>"));
+        }
     }
 
     @SuppressWarnings("EmptyMethod")
@@ -455,7 +459,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
             final String TS = String.valueOf(System.currentTimeMillis());
 
             commandoPrint = (PDFPassNeeded ? "qpdf --password=" + PDFPass + " --decrypt \"" + TS + FileName + "\" \"" + TS + FileName + "\" && " : "")
-                    + "lp -d " + PrinterIDS[PrinterID]
+                    + "lp -d " + PrinterIds.get(PrinterID)
                     + " -o PageRegion=A4"
                     + " -o sides=" + (!DoubleSided ? ("one-sided") : ("two-sided" + (LongEdge ? ("-long-edge") : ("-short-edge")) + " -o Duplex=DuplexNoTumble -o HPOption_Duplexer=True"))
                     + " -o number-up" + "=" + (PPS)
@@ -465,7 +469,7 @@ public class FilePrint extends Fragment implements PrinterConstants {
                     + " -n " + NC
                     + " \"" + TS + FileName + "\"";
             Log.i("PrintCommando", commandoPrint);
-            builder.setMessage("Print " + FileName + " on " + PrinterNames[PrinterID] + "?")
+            builder.setMessage("Print " + FileName + " on " + PrinterNames.get(PrinterID) + "?")
                     .setPositiveButton("FIRE", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             int ID = NumPrintJobs++;
