@@ -2,7 +2,7 @@ Prass
 =======
 Prass is an Android app designed to print via an SSH connection.
 
-It was developed for using printers at the CIP pools at the math department of LMU Munich. However, it can easily be changed to work for any setup where you have SSH access to a server that can print via the Unix `lp` command.
+It was developed for using printers at the CIP pools at the math department of LMU Munich, where it should work out of the box. However, it can easily be configured to work for any setup where you have SSH access to a server that can print via the Unix `lp` command.
 
 <img src="Screenshot_statistics.png" width=300/> <img src="Screenshot_print.png" width=300/>
 
@@ -12,7 +12,7 @@ When a file is sent for printing, it's copied (via `scp`) to the server, where t
 
 The app supports password-protected PDFs and choosing some standard printer job options (two-sided printing, multiple pages per sheet, printing multiple copies, giving a list of pages to be printed, ...) in a neat GUI.
 
-It should be easy to adapt the app to your needs by changing the hardcoded printer URLs (note that in the provided code, one of two available servers is selected at random for rudimentary load balancing) and printer names.
+In the app's settings, you can configure the server hostname(s) and provide a list of available printers, so it should be easy to adapt the app to your needs.
 
 Download
 --------
