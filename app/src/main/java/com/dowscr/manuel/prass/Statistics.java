@@ -174,7 +174,7 @@ public class Statistics extends Fragment {
         return rootView;
     }
 
-    public void updatePrinters() {
+    void updatePrinters() {
         TableLayout table = rootView.findViewById(R.id.workloads);
         for (PrinterRow r : Rows)
             table.removeView(r.row);

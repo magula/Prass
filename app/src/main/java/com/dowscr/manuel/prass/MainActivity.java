@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
     protected void onCreate(Bundle savedInstanceState) {
 //        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_main);
 
         final androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements LoginDialogFragme
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_test, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

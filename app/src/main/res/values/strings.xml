@@ -80,5 +80,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="conditionsnow">Conditionsv1</string>
     <string name="pdfpass_needed">PDF encrypted</string>
     <string name="pwd">password</string>
-    <!--    <string name="printers_raw_default">d101|B115|cip90.math.lmu.de\nd101|B115|cip91.math.lmu.de\nd102|BU135|cip90.math.lmu.de\nd102|BU135|cip91.math.lmu.de\nd103|BU136|cip90.math.lmu.de\nd103|BU136|cip91.math.lmu.de</string>-->
 </resources>
