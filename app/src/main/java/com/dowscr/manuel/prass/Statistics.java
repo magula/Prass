@@ -179,11 +179,12 @@ public class Statistics extends Fragment {
         for (PrinterRow r : Rows)
             table.removeView(r.row);
         Rows.clear();
-        for (String Name : PrinterNames) {
-            PrinterRow row = new PrinterRow(this.getContext(), Name);
-            table.addView(row.row);
-            Rows.add(row);
-        }
+        if (PrinterNames != null)
+            for (String Name : PrinterNames) {
+                PrinterRow row = new PrinterRow(this.getContext(), Name);
+                table.addView(row.row);
+                Rows.add(row);
+            }
     }
 
     @SuppressWarnings("EmptyMethod")
